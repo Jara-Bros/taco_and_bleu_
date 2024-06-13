@@ -1,0 +1,335 @@
+[gd_scene load_steps=18 format=3 uid="uid://ctpf54520d1cl"]
+
+[ext_resource type="Texture2D" uid="uid://dkxxajubv72ee" path="res://assets/art/act_one/sprites/woz/woz_idle_walk_sheet_export.png" id="2_4xf5d"]
+[ext_resource type="Script" path="res://player/player_scripts/state_idle.gd" id="4_5sv17"]
+[ext_resource type="Script" path="res://player/player_scripts/state_walk.gd" id="5_874c1"]
+[ext_resource type="Script" path="res://player/player_scripts/player_camera.gd" id="6_agvvq"]
+
+[sub_resource type="GDScript" id="GDScript_mk6hu"]
+script/source = "class_name Player extends CharacterBody2D
+
+const DIR_4 = [ Vector2.RIGHT, Vector2.DOWN, Vector2.LEFT, Vector2.UP]
+var cardinal_direction : Vector2 = Vector2.DOWN
+var direction : Vector2 = Vector2.ZERO
+
+var health : int = 1
+var max_health : int = 3
+
+@onready var animation_player : AnimationPlayer = $AnimationPlayer
+@onready var sprite : Sprite2D = $Sprite2D
+@onready var state_machine : PlayerStateMachine = $StateMachine
+
+
+func _ready():
+	PlayerManager.player = self
+	state_machine.initialize(self)
+	pass
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(_delta):
+	
+	direction = Vector2(
+		Input.get_axis(\"move_left\", \"move_right\"),
+		Input.get_axis(\"move_up\", \"move_down\")
+		).normalized()
+	pass
+	
+func _physics_process(_delta):
+	move_and_slide()
+
+
+func SetDirection() -> bool:
+	if direction == Vector2.ZERO:
+		return false
+	
+	var direction_id : int = int(round( (direction + cardinal_direction * 0.1).angle() / TAU * DIR_4.size() ) )
+	var new_dir = DIR_4[ direction_id ]
+	
+	if new_dir == cardinal_direction:
+		return false
+	
+	cardinal_direction = new_dir
+	return true
+
+
+func UpdateAnimation(state : String) -> void:
+	animation_player.play(state + \"_\" + AnimDirection())
+
+
+func AnimDirection() -> String:
+	if cardinal_direction == Vector2.DOWN:
+		return \"down\"
+	elif cardinal_direction == Vector2.UP:
+		return \"up\"
+	elif cardinal_direction == Vector2.LEFT:
+		return \"left\"
+	else: 
+		return \"right\"
+	
+
+func update_health() -> void:
+	pass
+"
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_6l7x3"]
+radius = 6.0
+height = 44.0
+
+[sub_resource type="Animation" id="Animation_km2r7"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_hadpl"]
+resource_name = "idle_down"
+length = 2.3
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.6, 0.7, 0.8, 0.9, 2.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 0, 1, 0, 1]
+}
+
+[sub_resource type="Animation" id="Animation_uhljx"]
+resource_name = "idle_left"
+length = 2.3
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.6, 0.7, 0.8, 0.9, 2.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [3, 4, 3, 4, 3, 4]
+}
+
+[sub_resource type="Animation" id="Animation_vonwj"]
+resource_name = "idle_right"
+length = 2.3
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.6, 0.7, 0.8, 0.9, 2.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [5, 6, 5, 6, 5, 6]
+}
+
+[sub_resource type="Animation" id="Animation_d73u2"]
+resource_name = "idle_up"
+length = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [2]
+}
+
+[sub_resource type="Animation" id="Animation_7krkp"]
+resource_name = "walk_down"
+length = 0.8
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [7, 8, 7, 9]
+}
+
+[sub_resource type="Animation" id="Animation_bln8b"]
+resource_name = "walk_left"
+length = 0.8
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [3, 12, 3, 13]
+}
+
+[sub_resource type="Animation" id="Animation_rxdu1"]
+resource_name = "walk_right"
+length = 0.8
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [5, 14, 5, 15]
+}
+
+[sub_resource type="Animation" id="Animation_3hh3v"]
+resource_name = "walk_up"
+length = 0.8
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [2, 10, 2, 11]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_5cluk"]
+_data = {
+"RESET": SubResource("Animation_km2r7"),
+"idle_down": SubResource("Animation_hadpl"),
+"idle_left": SubResource("Animation_uhljx"),
+"idle_right": SubResource("Animation_vonwj"),
+"idle_up": SubResource("Animation_d73u2"),
+"walk_down": SubResource("Animation_7krkp"),
+"walk_left": SubResource("Animation_bln8b"),
+"walk_right": SubResource("Animation_rxdu1"),
+"walk_up": SubResource("Animation_3hh3v")
+}
+
+[sub_resource type="GDScript" id="GDScript_7sfn3"]
+script/source = "class_name PlayerStateMachine extends Node
+
+
+var states : Array[ State ]
+var prev_state : State
+var current_state : State
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	process_mode = Node.PROCESS_MODE_DISABLED
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	change_state(current_state.process(delta))
+	pass
+
+func _physics_process(delta):
+	change_state(current_state.physics(delta))
+	pass
+	
+	
+func _unhandled_input(event): 
+	change_state(current_state.handle_input(event))
+	pass
+	
+func initialize(_player : Player) -> void:
+	states = []
+	
+	for c in get_children():
+		if c is State: 
+			states.append(c)
+	
+	if states.size() == 0:
+		return
+	
+	states[0].player = _player
+	states[0].state_machine = self
+	
+	for state in states:
+		state.init()
+	
+	change_state(states[0])
+	process_mode = Node.PROCESS_MODE_INHERIT
+
+func change_state( new_state : State) -> void:
+	if new_state == null || new_state == current_state:
+		return
+	
+	if current_state:
+		current_state.exit()
+		
+	prev_state = current_state
+	current_state = new_state
+	current_state.enter()
+"
+
+[node name="Player" type="CharacterBody2D" groups=["player"]]
+collision_layer = 3
+wall_min_slide_angle = 0.174533
+script = SubResource("GDScript_mk6hu")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -24)
+texture = ExtResource("2_4xf5d")
+hframes = 16
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -23)
+shape = SubResource("CapsuleShape2D_6l7x3")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_5cluk")
+}
+autoplay = "idle_up"
+
+[node name="StateMachine" type="Node" parent="."]
+script = SubResource("GDScript_7sfn3")
+
+[node name="Idle" type="Node" parent="StateMachine"]
+script = ExtResource("4_5sv17")
+
+[node name="Walk" type="Node" parent="StateMachine"]
+script = ExtResource("5_874c1")
+move_speed = 85.0
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(0, -13)
+zoom = Vector2(4, 4)
+editor_draw_limits = true
+script = ExtResource("6_agvvq")

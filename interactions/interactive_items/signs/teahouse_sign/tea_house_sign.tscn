@@ -1,0 +1,29 @@
+[gd_scene load_steps=6 format=3 uid="uid://cq2qmf4etqnrc"]
+
+[ext_resource type="Texture2D" uid="uid://qbum2kv83sen" path="res://interactions/interactive_items/signs/teahouse_sign/woz_tea_house_sign.png" id="1_lv3hy"]
+[ext_resource type="Script" path="res://interactions/interactive_items/signs/teahouse_sign/tea_house_sign.gd" id="1_vr10o"]
+[ext_resource type="PackedScene" uid="uid://bog513hslqo0x" path="res://interactions/interaction_area/interaction_area.tscn" id="3_651dn"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vhpqt"]
+size = Vector2(32, 8)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pqmcr"]
+size = Vector2(32, 19)
+
+[node name="TeahouseSign" type="StaticBody2D"]
+script = ExtResource("1_vr10o")
+tea_sign_message = "res://interactions/interactive_items/signs/teahouse_sign/tea_sign_timeline.dtl"
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_lv3hy")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -4)
+shape = SubResource("RectangleShape2D_vhpqt")
+
+[node name="InteractionArea" parent="." instance=ExtResource("3_651dn")]
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea"]
+position = Vector2(0, 8.5)
+shape = SubResource("RectangleShape2D_pqmcr")

@@ -1,0 +1,24 @@
+[style name="sign_read_style"]
+Days of Pickling\: A Collection of Wozku
+Read one?
+- Yes
+	The Universe, ever growing, into a dark forever...
+	...like my nails!
+	Read another?
+	- Yes
+		Butterflies!
+		Tulips are busy,\
+so I visit daisies.
+		Read another?
+		- Yes
+			Gazing on a \
+cloudy night.
+			Fireflies put on\
+a good show, too.
+			[end_timeline]
+		- No
+			[end_timeline]
+	- No
+		[end_timeline]
+- No
+	[end_timeline]

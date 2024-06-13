@@ -1,0 +1,39 @@
+{
+"@path": "res://addons/dialogic/Resources/character.gd",
+"@subpath": NodePath(""),
+"_translation_id": "",
+"color": Color(0.94902, 0, 0.235294, 1),
+"custom_info": {
+"sound_mood_default": "",
+"sound_moods": {},
+"style": "second_date_style"
+},
+"default_portrait": "neutral",
+"description": "",
+"display_name": "Barb",
+"mirror": false,
+"nicknames": ["Barb"],
+"offset": Vector2(0, 80),
+"portraits": {
+"happy": {
+"export_overrides": {
+"image": "\"res://NPCs/barb/barb_happy.png\""
+},
+"mirror": false,
+"offset": Vector2(0, 0),
+"scale": 1,
+"scene": ""
+},
+"neutral": {
+"export_overrides": {
+"image": "\"res://NPCs/barb/barb_idle.png\""
+},
+"ignore_char_scale": false,
+"mirror": false,
+"offset": Vector2(0, 0),
+"scale": 1,
+"scene": ""
+}
+},
+"scale": 1.5
+}

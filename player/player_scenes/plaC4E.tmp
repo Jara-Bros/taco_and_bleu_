@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://ctpf54520d1cl"]
+
+[ext_resource type="Script" path="res://player/player_scripts/player.gd" id="1_k75c1"]
+[ext_resource type="Texture2D" uid="uid://oc12dwsrvkrh" path="res://assets/act_one_assets/act_one_art/act_one_sprites/woz/woz_idle-export.png" id="2_asbwg"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_24opo"]
+radius = 5.0
+height = 42.0
+
+[node name="Player" type="CharacterBody2D"]
+script = ExtResource("1_k75c1")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -24)
+texture = ExtResource("2_asbwg")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -22)
+shape = SubResource("CapsuleShape2D_24opo")

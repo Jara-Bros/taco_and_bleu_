@@ -1,0 +1,24 @@
+[gd_scene load_steps=5 format=3 uid="uid://dndvp0k0wwof0"]
+
+[ext_resource type="Script" path="res://NPCs/npc.gd" id="1_e8npl"]
+[ext_resource type="PackedScene" uid="uid://bog513hslqo0x" path="res://interactions/interaction_area/interaction_area.tscn" id="3_il45h"]
+[ext_resource type="PackedScene" uid="uid://jngio42vviqw" path="res://general_nodes/persistent_data_handler/persistent_data_handler.tscn" id="4_rusdd"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kqx3u"]
+size = Vector2(38, 38)
+
+[node name="NPC" type="Node2D"]
+process_mode = 3
+script = ExtResource("1_e8npl")
+
+[node name="InteractionArea" parent="." instance=ExtResource("3_il45h")]
+position = Vector2(0, -1)
+scale = Vector2(1.72, 1)
+collision_mask = 2
+action_name = "talk"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea"]
+position = Vector2(0, -12)
+shape = SubResource("RectangleShape2D_kqx3u")
+
+[node name="PersistentDataHasTalked" parent="." instance=ExtResource("4_rusdd")]

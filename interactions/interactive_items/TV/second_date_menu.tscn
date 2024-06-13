@@ -1,0 +1,53 @@
+[gd_scene load_steps=4 format=3 uid="uid://d2ykudxeuhswi"]
+
+[ext_resource type="Script" path="res://mini_games/second_date/second_date_menu.gd" id="1_ukyqn"]
+[ext_resource type="Texture2D" uid="uid://c8bom0oe87sfe" path="res://mini_games/second_date/Untitled(1).png" id="2_isipu"]
+[ext_resource type="FontFile" uid="uid://cqddy7qk3hduc" path="res://assets/fonts/PixelOperator8.ttf" id="2_lxlva"]
+
+[node name="SecondDateMenu" type="CanvasLayer"]
+script = ExtResource("1_ukyqn")
+dialogue_one = "res://mini_games/second_date/second_date_timeline.dtl"
+
+[node name="TextureRect" type="TextureRect" parent="."]
+offset_right = 1176.0
+offset_bottom = 712.0
+texture = ExtResource("2_isipu")
+expand_mode = 1
+
+[node name="Start" type="Button" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -220.0
+offset_top = -32.0
+offset_right = 5.0
+offset_bottom = 69.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.889636, 0.950209)
+theme_override_fonts/font = ExtResource("2_lxlva")
+theme_override_font_sizes/font_size = 40
+action_mode = 0
+text = "Start"
+
+[node name="Quit" type="Button" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -220.0
+offset_top = 120.0
+offset_right = -4.0
+offset_bottom = 204.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.889636, 0.950209)
+theme_override_fonts/font = ExtResource("2_lxlva")
+theme_override_font_sizes/font_size = 40
+text = "Quit"
+
+[connection signal="pressed" from="Start" to="." method="_on_start_pressed"]
+[connection signal="pressed" from="Quit" to="." method="_on_quit_pressed"]

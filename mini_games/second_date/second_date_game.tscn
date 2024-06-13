@@ -1,0 +1,117 @@
+[gd_scene load_steps=12 format=3 uid="uid://j4ba8thmdeyp"]
+
+[ext_resource type="Script" path="res://mini_games/second_date/second_date_game.gd" id="1_lpvhl"]
+[ext_resource type="PackedScene" uid="uid://3u62unffbtl" path="res://mini_games/second_date/score_edge.tscn" id="5_tub3b"]
+[ext_resource type="PackedScene" uid="uid://dgwq2ku7erl55" path="res://mini_games/second_date/bill.tscn" id="6_jgjut"]
+[ext_resource type="PackedScene" uid="uid://cay8nbvk244af" path="res://mini_games/second_date/paddle.tscn" id="7_04ylk"]
+[ext_resource type="Texture2D" uid="uid://d2eig0yl07lmo" path="res://mini_games/second_date/bill_hand.png" id="8_6rdru"]
+[ext_resource type="Script" path="res://mini_games/second_date/cpu_paddle.gd" id="9_wsjto"]
+[ext_resource type="Texture2D" uid="uid://blwhhtl3ry6yd" path="res://mini_games/second_date/dinner_bg_bw.png" id="10_fpij3"]
+[ext_resource type="Texture2D" uid="uid://bnwcrw3sh1qkq" path="res://mini_games/second_date/bill_hand_CPU.png" id="10_i72jo"]
+[ext_resource type="PackedScene" uid="uid://dfhv7bmkmvo27" path="res://mini_games/second_date/ui.tscn" id="11_3i73t"]
+[ext_resource type="PackedScene" uid="uid://c7vt3habnevwc" path="res://GUI/scene_transitions/scene_transition.tscn" id="12_vjdnx"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dmloe"]
+size = Vector2(616, 42)
+
+[node name="SecondDate" type="Node2D"]
+script = ExtResource("1_lpvhl")
+player_first_point = "res://mini_games/second_date/point_one_m_timeline.dtl"
+player_second_point = "res://mini_games/second_date/point_two_m_timeline.dtl"
+player_third_point = "res://mini_games/second_date/point_three_m_timeline.dtl"
+cpu_first_point = "res://mini_games/second_date/point_one_f_timeline.dtl"
+cpu_second_point = "res://mini_games/second_date/point_two_f_timeline.dtl"
+cpu_third_point = "res://mini_games/second_date/point_three_f_timeline.dtl"
+player_lost_point = "res://mini_games/second_date/lost_m_timeline.dtl"
+cpu_lost_point = "res://mini_games/second_date/lost_f_timeline.dtl"
+
+[node name="Bg" type="TextureRect" parent="."]
+modulate = Color(1, 0.180392, 0.235294, 1)
+offset_right = 1080.0
+offset_bottom = 721.0
+texture = ExtResource("10_fpij3")
+expand_mode = 1
+
+[node name="ColorRect" type="ColorRect" parent="Bg"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+scale = Vector2(27.2, 3.2)
+color = Color(0, 0, 0, 1)
+
+[node name="ColorRect2" type="ColorRect" parent="Bg"]
+layout_mode = 0
+offset_left = -16.0
+offset_top = 576.0
+offset_right = 24.0
+offset_bottom = 616.0
+scale = Vector2(27.48, 4.48)
+color = Color(0, 0, 0, 1)
+
+[node name="UI" parent="Bg" instance=ExtResource("11_3i73t")]
+layer = 2
+offset = Vector2(0, 50)
+transform = Transform2D(1, 0, 0, 1, 0, 50)
+
+[node name="Bounds" type="StaticBody2D" parent="."]
+collision_layer = 12
+collision_mask = 8
+
+[node name="Top" type="CollisionShape2D" parent="Bounds"]
+position = Vector2(536, 119.6)
+scale = Vector2(1.76, 0.4)
+shape = SubResource("RectangleShape2D_dmloe")
+
+[node name="Bottom" type="CollisionShape2D" parent="Bounds"]
+position = Vector2(536, 598)
+scale = Vector2(1.76, 1)
+shape = SubResource("RectangleShape2D_dmloe")
+
+[node name="ScoreEdgeLeft" parent="." instance=ExtResource("5_tub3b")]
+position = Vector2(120, 352)
+scale = Vector2(1, 5.80452)
+collision_layer = 4
+collision_mask = 8
+
+[node name="ScoreEdgeRight" parent="." instance=ExtResource("5_tub3b")]
+position = Vector2(956, 352)
+scale = Vector2(1.24002, 5.88)
+collision_layer = 4
+collision_mask = 8
+
+[node name="Bill" parent="." instance=ExtResource("6_jgjut")]
+position = Vector2(536, 440)
+collision_layer = 8
+collision_mask = 4
+initial_bill_speed = 15
+speed_multiplier = 1.03
+
+[node name="Paddle" parent="." instance=ExtResource("7_04ylk")]
+position = Vector2(154, 414)
+collision_layer = 4
+collision_mask = 8
+speed = 500
+
+[node name="Sprite2D" type="Sprite2D" parent="Paddle"]
+position = Vector2(-29, -4)
+scale = Vector2(0.145786, 0.0990098)
+texture = ExtResource("8_6rdru")
+
+[node name="CPU" parent="." node_paths=PackedStringArray("bill") instance=ExtResource("7_04ylk")]
+position = Vector2(952, 418)
+collision_layer = 4
+collision_mask = 8
+can_sleep = false
+script = ExtResource("9_wsjto")
+paddle_speed = 35000
+bill = NodePath("../Bill")
+
+[node name="Sprite2D2" type="Sprite2D" parent="CPU"]
+position = Vector2(32, -4)
+scale = Vector2(0.145786, 0.0990098)
+texture = ExtResource("10_i72jo")
+
+[node name="SceneTransition" parent="." instance=ExtResource("12_vjdnx")]
+
+[connection signal="point_scored" from="ScoreEdgeLeft" to="." method="_on_CPU_scored"]
+[connection signal="point_scored" from="ScoreEdgeRight" to="." method="_on_player_scored"]

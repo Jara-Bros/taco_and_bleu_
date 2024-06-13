@@ -1,0 +1,19 @@
+[background arg="res://mini_games/second_date/dinner_bg_bw_1.png" fade="0.0"]
+[wait time="1.5"]
+join female_character 3
+female_character: ...and then I was like,
+female_character (female): Girly girl\: no one even KNOWS what you're talking about!
+join male_character 1
+male_character: Wow.
+male_character: That's crazy.
+join waiter_character 2
+waiter_character: Here you are. Feel free to take your time.
+waiter_character: No rush.
+leave waiter_character
+- Look at the bill
+	male_character: Oh!
+	[wait time="1.0"]
+	female_character: So...
+	male_character: Hey, I got the first one.
+	female_character: Riiight. But you said you were treating me.
+	[end_timeline]

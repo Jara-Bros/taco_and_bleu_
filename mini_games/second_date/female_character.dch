@@ -1,0 +1,29 @@
+{
+"@path": "res://addons/dialogic/Resources/character.gd",
+"@subpath": NodePath(""),
+"_translation_id": "",
+"color": Color(1, 1, 1, 1),
+"custom_info": {
+"sound_mood_default": "",
+"sound_moods": {},
+"style": "dialogue_style"
+},
+"default_portrait": "female",
+"description": "",
+"display_name": "female",
+"mirror": false,
+"nicknames": [""],
+"offset": Vector2(100, 150),
+"portraits": {
+"female": {
+"export_overrides": {
+"image": "\"res://mini_games/second_date/female-icon-15.png\""
+},
+"mirror": false,
+"offset": Vector2(0, 0),
+"scale": 1,
+"scene": ""
+}
+},
+"scale": 1.0
+}

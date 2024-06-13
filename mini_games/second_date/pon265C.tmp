@@ -1,0 +1,156 @@
+[gd_scene load_steps=14 format=3 uid="uid://j4ba8thmdeyp"]
+
+[ext_resource type="PackedScene" uid="uid://ca20oujbpvemr" path="res://player/player_scenes/player_spawn.tscn" id="1_5ipej"]
+[ext_resource type="Script" path="res://mini_games/romantic_date/pong.gd" id="1_6hdia"]
+[ext_resource type="Texture2D" uid="uid://b10f1g7h5bo1q" path="res://mini_games/romantic_date/date_table.jpg" id="1_xdvfx"]
+[ext_resource type="Texture2D" uid="uid://dsn2a3kquo4ug" path="res://mini_games/romantic_date/male-icon-15.png" id="2_6m32b"]
+[ext_resource type="Texture2D" uid="uid://ddrgjdno4lvqm" path="res://mini_games/romantic_date/female-icon-15.png" id="3_hg1eg"]
+[ext_resource type="Texture2D" uid="uid://cit6nfn5ep05b" path="res://mini_games/romantic_date/bill_hand.png" id="4_d3ur5"]
+[ext_resource type="Texture2D" uid="uid://dm2y66vyusgft" path="res://mini_games/romantic_date/kisspng-bill-download-royalty-free-clip-art-legal-studies-cliparts-5aab2d905c6264.7535060015211677603784.png" id="5_ps0y5"]
+[ext_resource type="Script" path="res://mini_games/romantic_date/player_paddle.gd" id="6_pwtv4"]
+[ext_resource type="FontFile" uid="uid://cqddy7qk3hduc" path="res://assets/fonts/PixelOperator8.ttf" id="6_u546k"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_x3iss"]
+radius = 5.63865
+height = 29.0134
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vef5r"]
+size = Vector2(10.7248, 14.2477)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dmloe"]
+size = Vector2(272, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_k8jti"]
+size = Vector2(8, 80)
+
+[node name="Pong" type="Node2D"]
+script = ExtResource("1_6hdia")
+paddle_speed = 250
+
+[node name="PlayerSpawn" parent="." instance=ExtResource("1_5ipej")]
+position = Vector2(136, 120)
+
+[node name="background" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(0, 48)
+scale = Vector2(0.425127, 0.263285)
+texture = ExtResource("1_xdvfx")
+centered = false
+
+[node name="male" type="Sprite2D" parent="."]
+position = Vector2(24, 136)
+scale = Vector2(0.34815, 0.281959)
+texture = ExtResource("2_6m32b")
+
+[node name="female" type="Sprite2D" parent="."]
+position = Vector2(248, 136)
+scale = Vector2(0.320522, 0.267538)
+texture = ExtResource("3_hg1eg")
+
+[node name="Player" type="StaticBody2D" parent="."]
+position = Vector2(60, 132)
+collision_mask = 3
+script = ExtResource("6_pwtv4")
+
+[node name="Sprite2D" type="Sprite2D" parent="Player"]
+position = Vector2(1.90735e-06, 0)
+scale = Vector2(0.0364235, 0.0297474)
+texture = ExtResource("4_d3ur5")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+position = Vector2(5, -2)
+scale = Vector2(-0.501678, -0.711561)
+shape = SubResource("CapsuleShape2D_x3iss")
+
+[node name="CPU" type="StaticBody2D" parent="."]
+position = Vector2(215, 132)
+collision_mask = 3
+
+[node name="Sprite2D" type="Sprite2D" parent="CPU"]
+position = Vector2(1.90735e-06, 0)
+scale = Vector2(0.0364235, 0.0297474)
+texture = ExtResource("4_d3ur5")
+flip_h = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CPU"]
+position = Vector2(-5, -2)
+scale = Vector2(-0.501678, -0.711561)
+shape = SubResource("CapsuleShape2D_x3iss")
+
+[node name="Bill" type="CharacterBody2D" parent="."]
+position = Vector2(136, 120)
+collision_mask = 3
+
+[node name="Sprite2D" type="Sprite2D" parent="Bill"]
+scale = Vector2(0.0209933, 0.019559)
+texture = ExtResource("5_ps0y5")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bill"]
+position = Vector2(0, -2.98023e-08)
+scale = Vector2(1.14837, 0.912425)
+shape = SubResource("RectangleShape2D_vef5r")
+
+[node name="Bounds" type="StaticBody2D" parent="."]
+collision_layer = 3
+
+[node name="Top" type="CollisionShape2D" parent="Bounds"]
+position = Vector2(136, 32)
+shape = SubResource("RectangleShape2D_dmloe")
+
+[node name="Bottom" type="CollisionShape2D" parent="Bounds"]
+position = Vector2(136, 176)
+shape = SubResource("RectangleShape2D_dmloe")
+
+[node name="TopBorder" type="ColorRect" parent="Bounds"]
+offset_right = 192.0
+offset_bottom = 24.0
+scale = Vector2(1.41712, 1.99825)
+color = Color(0, 0, 0, 1)
+
+[node name="BottomBorder" type="ColorRect" parent="Bounds"]
+offset_top = 160.0
+offset_right = 192.0
+offset_bottom = 184.0
+scale = Vector2(1.41811, 1.68365)
+color = Color(0, 0, 0, 1)
+
+[node name="ScoreLeft" type="Area2D" parent="."]
+position = Vector2(-8, 104)
+scale = Vector2(1, 1.4)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ScoreLeft"]
+position = Vector2(4, 0)
+shape = SubResource("RectangleShape2D_k8jti")
+
+[node name="ScoreRight" type="Area2D" parent="."]
+position = Vector2(272, 104)
+scale = Vector2(1, 1.4)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ScoreRight"]
+position = Vector2(4, 0)
+shape = SubResource("RectangleShape2D_k8jti")
+
+[node name="HUD" type="CanvasLayer" parent="."]
+follow_viewport_enabled = true
+
+[node name="PlayerScore" type="Label" parent="HUD"]
+offset_left = 88.0
+offset_top = 48.0
+offset_right = 128.0
+offset_bottom = 71.0
+theme_override_fonts/font = ExtResource("6_u546k")
+theme_override_font_sizes/font_size = 0
+text = "0"
+
+[node name="CPUScore" type="Label" parent="HUD"]
+offset_left = 168.0
+offset_top = 48.0
+offset_right = 208.0
+offset_bottom = 71.0
+theme_override_fonts/font = ExtResource("6_u546k")
+theme_override_font_sizes/font_size = 0
+text = "0"
+
+[node name="BallTimer" type="Timer" parent="."]
+one_shot = true
+autostart = true

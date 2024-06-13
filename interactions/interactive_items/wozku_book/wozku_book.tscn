@@ -1,0 +1,27 @@
+[gd_scene load_steps=6 format=3 uid="uid://yfwq07t48qw2"]
+
+[ext_resource type="Texture2D" uid="uid://ik81i132urlx" path="res://interactions/interactive_items/wozku_book/wozku_book.png" id="1_don2j"]
+[ext_resource type="Script" path="res://interactions/interactive_items/wozku_book/wozku_book.gd" id="1_lchoi"]
+[ext_resource type="PackedScene" uid="uid://bog513hslqo0x" path="res://interactions/interaction_area/interaction_area.tscn" id="2_8mai0"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vmf6k"]
+size = Vector2(14, 2)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0v4tu"]
+
+[node name="WozkuBook" type="StaticBody2D"]
+script = ExtResource("1_lchoi")
+wozku_book = "res://interactions/interactive_items/wozku_book/wozku_book_timeline.dtl"
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_don2j")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -7)
+shape = SubResource("RectangleShape2D_vmf6k")
+
+[node name="InteractionArea" parent="." instance=ExtResource("2_8mai0")]
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea"]
+shape = SubResource("RectangleShape2D_0v4tu")

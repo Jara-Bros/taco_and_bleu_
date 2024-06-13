@@ -1,0 +1,32 @@
+[gd_scene load_steps=6 format=3 uid="uid://dbw8p0a17doqf"]
+
+[ext_resource type="Script" path="res://interactions/interactive_items/signs/gallery_sign/gallery_sign.gd" id="1_pylpp"]
+[ext_resource type="Texture2D" uid="uid://bqk4mcix2cfk1" path="res://interactions/interactive_items/signs/gallery_sign/barb_gallery_sign.png" id="2_pq8t4"]
+[ext_resource type="PackedScene" uid="uid://bog513hslqo0x" path="res://interactions/interaction_area/interaction_area.tscn" id="3_g1ipn"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yxvsk"]
+size = Vector2(32, 8)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_iufuv"]
+size = Vector2(42, 22)
+
+[node name="GallerySign" type="StaticBody2D"]
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("1_pylpp")
+gallery_sign_message = "res://interactions/interactive_items/signs/gallery_sign/gallery_sign_timeline.dtl"
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -8)
+texture = ExtResource("2_pq8t4")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -12)
+shape = SubResource("RectangleShape2D_yxvsk")
+
+[node name="InteractionArea" parent="." instance=ExtResource("3_g1ipn")]
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea"]
+position = Vector2(0, -7)
+shape = SubResource("RectangleShape2D_iufuv")

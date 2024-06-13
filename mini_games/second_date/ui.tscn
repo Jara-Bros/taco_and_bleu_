@@ -1,0 +1,29 @@
+[gd_scene load_steps=3 format=3 uid="uid://dfhv7bmkmvo27"]
+
+[ext_resource type="Script" path="res://mini_games/second_date/UI.gd" id="1_6ak6g"]
+[ext_resource type="FontFile" uid="uid://cqddy7qk3hduc" path="res://assets/fonts/PixelOperator8.ttf" id="2_gouo7"]
+
+[node name="UI" type="CanvasLayer"]
+script = ExtResource("1_6ak6g")
+
+[node name="PlayerPoints" type="Label" parent="."]
+unique_name_in_owner = true
+offset_left = 400.0
+offset_top = 64.0
+offset_right = 456.0
+offset_bottom = 128.0
+size_flags_horizontal = 0
+theme_override_fonts/font = ExtResource("2_gouo7")
+theme_override_font_sizes/font_size = 64
+text = "0"
+
+[node name="CPUPoints" type="Label" parent="."]
+unique_name_in_owner = true
+offset_left = 592.0
+offset_top = 64.0
+offset_right = 648.0
+offset_bottom = 128.0
+size_flags_horizontal = 8
+theme_override_fonts/font = ExtResource("2_gouo7")
+theme_override_font_sizes/font_size = 64
+text = "0"

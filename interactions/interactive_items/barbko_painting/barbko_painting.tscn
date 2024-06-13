@@ -1,0 +1,31 @@
+[gd_scene load_steps=7 format=3 uid="uid://u5dcdw7m10xj"]
+
+[ext_resource type="Texture2D" uid="uid://b03epbkrxvpgb" path="res://interactions/interactive_items/barbko_painting/barbko_painting.png" id="1_0r4gv"]
+[ext_resource type="Script" path="res://interactions/interactive_items/barbko_painting/barbko_painting.gd" id="1_k68t7"]
+[ext_resource type="PackedScene" uid="uid://bog513hslqo0x" path="res://interactions/interaction_area/interaction_area.tscn" id="2_48lm6"]
+[ext_resource type="PackedScene" uid="uid://vlt5n1qfg7uv" path="res://GUI/scene_transitions/scene_transition_white.tscn" id="4_fq600"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_p11kn"]
+size = Vector2(80, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_al20r"]
+size = Vector2(80, 50)
+
+[node name="BarbkoPainting" type="StaticBody2D"]
+script = ExtResource("1_k68t7")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_0r4gv")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-8, 0)
+shape = SubResource("RectangleShape2D_p11kn")
+
+[node name="InteractionArea" parent="." instance=ExtResource("2_48lm6")]
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea"]
+position = Vector2(-8, 15)
+shape = SubResource("RectangleShape2D_al20r")
+
+[node name="SceneTransition" parent="." instance=ExtResource("4_fq600")]
