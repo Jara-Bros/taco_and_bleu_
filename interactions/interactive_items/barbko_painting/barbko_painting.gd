@@ -12,6 +12,7 @@ var player_move_down
 func _ready():
 	interaction_area.interact = Callable(self, "_turn_on_painting")
 
+
 func disable_player_movement():
 	player_move_left = InputMap.action_get_events("move_left")
 	player_move_right = InputMap.action_get_events("move_right")

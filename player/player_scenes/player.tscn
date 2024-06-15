@@ -1,11 +1,13 @@
-[gd_scene load_steps=18 format=3 uid="uid://ctpf54520d1cl"]
+[gd_scene load_steps=25 format=3 uid="uid://ctpf54520d1cl"]
 
 [ext_resource type="Script" path="res://player/player_scripts/player.gd" id="1_54hsv"]
-[ext_resource type="Texture2D" uid="uid://dkxxajubv72ee" path="res://assets/art/act_one/sprites/woz/woz_idle_walk_sheet_export.png" id="2_4xf5d"]
-[ext_resource type="Script" path="res://player/player_scripts/player_state_machine.gd" id="4_wwjlg"]
-[ext_resource type="Script" path="res://player/player_scripts/state_idle.gd" id="5_tm6ja"]
+[ext_resource type="Texture2D" uid="uid://cdd58v37xs2wc" path="res://assets/art/act_one/sprites/woz/woz_taco_idle_walk_jump_sheet.png" id="2_ai7ko"]
+[ext_resource type="Script" path="res://player/player_scripts/player_state_machine.gd" id="4_k2bir"]
+[ext_resource type="Script" path="res://player/player_scripts/states/state_idle.gd" id="5_aojpy"]
 [ext_resource type="Script" path="res://player/player_scripts/player_camera.gd" id="6_agvvq"]
-[ext_resource type="Script" path="res://player/player_scripts/state_walk.gd" id="6_rdwqg"]
+[ext_resource type="Script" path="res://player/player_scripts/states/state_walk.gd" id="6_n2a2o"]
+[ext_resource type="Script" path="res://player/player_scripts/states/state_taco.gd" id="7_fkwv1"]
+[ext_resource type="PackedScene" uid="uid://dirv4cuymroun" path="res://general_nodes/hurtbox/Hurtbox.tscn" id="8_rlik6"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_6l7x3"]
 radius = 6.0
@@ -161,18 +163,90 @@ tracks/0/keys = {
 "values": [2, 10, 2, 11]
 }
 
+[sub_resource type="Animation" id="Animation_ietrs"]
+resource_name = "idle_taco"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [16]
+}
+
+[sub_resource type="Animation" id="Animation_0ayh7"]
+resource_name = "walk_taco"
+length = 0.6
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1998, 0.3996),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [17, 18, 19]
+}
+
+[sub_resource type="Animation" id="Animation_l8xrp"]
+resource_name = "jump_taco"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [20]
+}
+
+[sub_resource type="Animation" id="Animation_mrsds"]
+resource_name = "fall_taco"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [21]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_5cluk"]
 _data = {
 "RESET": SubResource("Animation_km2r7"),
+"fall_taco": SubResource("Animation_mrsds"),
 "idle_down": SubResource("Animation_hadpl"),
 "idle_left": SubResource("Animation_uhljx"),
 "idle_right": SubResource("Animation_vonwj"),
+"idle_taco": SubResource("Animation_ietrs"),
 "idle_up": SubResource("Animation_d73u2"),
+"jump_taco": SubResource("Animation_l8xrp"),
 "walk_down": SubResource("Animation_7krkp"),
 "walk_left": SubResource("Animation_bln8b"),
 "walk_right": SubResource("Animation_rxdu1"),
+"walk_taco": SubResource("Animation_0ayh7"),
 "walk_up": SubResource("Animation_3hh3v")
 }
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_d1t1h"]
+radius = 13.0
 
 [node name="Player" type="CharacterBody2D" groups=["player"]]
 collision_layer = 3
@@ -181,8 +255,8 @@ script = ExtResource("1_54hsv")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(0, -24)
-texture = ExtResource("2_4xf5d")
-hframes = 16
+texture = ExtResource("2_ai7ko")
+hframes = 23
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -23)
@@ -192,7 +266,6 @@ shape = SubResource("CapsuleShape2D_6l7x3")
 libraries = {
 "": SubResource("AnimationLibrary_5cluk")
 }
-autoplay = "idle_up"
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(0, -13)
@@ -201,10 +274,21 @@ editor_draw_limits = true
 script = ExtResource("6_agvvq")
 
 [node name="StateMachine" type="Node" parent="."]
-script = ExtResource("4_wwjlg")
+script = ExtResource("4_k2bir")
 
 [node name="Idle" type="Node" parent="StateMachine"]
-script = ExtResource("5_tm6ja")
+script = ExtResource("5_aojpy")
 
 [node name="Walk" type="Node" parent="StateMachine"]
-script = ExtResource("6_rdwqg")
+script = ExtResource("6_n2a2o")
+
+[node name="Taco" type="Node" parent="StateMachine"]
+script = ExtResource("7_fkwv1")
+
+[node name="Hurtbox" parent="." instance=ExtResource("8_rlik6")]
+collision_mask = 256
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+position = Vector2(0, -3)
+shape = SubResource("CircleShape2D_d1t1h")
+debug_color = Color(0.909696, 0.167263, 0.612586, 0.42)

@@ -1,0 +1,25 @@
+[gd_scene load_steps=6 format=3 uid="uid://dwwha05pgg5d6"]
+
+[ext_resource type="Texture2D" uid="uid://dnaapdo43cdqi" path="res://assets/art/act_one/sprites/taco/taco_idle_walk_jump_sheet.png" id="1_741m1"]
+[ext_resource type="Script" path="res://interactions/change_player.gd" id="1_yqr6p"]
+[ext_resource type="PackedScene" uid="uid://bog513hslqo0x" path="res://interactions/interaction_area/interaction_area.tscn" id="2_lgsug"]
+[ext_resource type="PackedScene" uid="uid://jngio42vviqw" path="res://general_nodes/persistent_data_handler/persistent_data_handler.tscn" id="4_g7tb3"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6ed34"]
+size = Vector2(43, 56)
+
+[node name="ChangePlayer" type="Node2D"]
+script = ExtResource("1_yqr6p")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_741m1")
+hframes = 7
+
+[node name="InteractionArea" parent="." instance=ExtResource("2_lgsug")]
+collision_mask = 2
+action_name = "change"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea"]
+shape = SubResource("RectangleShape2D_6ed34")
+
+[node name="PersistentDataHasChanged" parent="." instance=ExtResource("4_g7tb3")]

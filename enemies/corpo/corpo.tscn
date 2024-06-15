@@ -1,0 +1,12 @@
+[gd_scene load_steps=2 format=3 uid="uid://cusfv4o0q6dd6"]
+
+[ext_resource type="Texture2D" uid="uid://c4cftn3oq3p3e" path="res://enemies/corpo/corpo_idle_walk_stun_sheet.png" id="1_srf2i"]
+
+[node name="Corpo" type="CharacterBody2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -32)
+texture = ExtResource("1_srf2i")
+hframes = 6
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]

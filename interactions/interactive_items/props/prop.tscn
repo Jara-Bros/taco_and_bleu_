@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://cx2xnw66f3fsr"]
+
+[ext_resource type="Script" path="res://interactions/interactive_items/props/prop.gd" id="1_mb5dr"]
+[ext_resource type="Texture2D" uid="uid://qbum2kv83sen" path="res://interactions/interactive_items/signs/teahouse_sign/woz_tea_house_sign.png" id="1_oapd7"]
+[ext_resource type="PackedScene" uid="uid://cupelf2yaqvuf" path="res://general_nodes/hitbox/hitbox.tscn" id="2_5yk8n"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_22jb6"]
+size = Vector2(32, 16)
+
+[node name="Prop" type="Node2D"]
+script = ExtResource("1_mb5dr")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_oapd7")
+
+[node name="Hitbox" parent="." instance=ExtResource("2_5yk8n")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+position = Vector2(0, 8)
+shape = SubResource("RectangleShape2D_22jb6")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(0, 8)
+shape = SubResource("RectangleShape2D_22jb6")

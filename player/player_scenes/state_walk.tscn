@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://dmrallnqoyvvd"]
-
-[ext_resource type="Script" path="res://player/player_scripts/state_walk.gd" id="1_hdxfb"]
-
-[node name="Walk" type="Node"]
-script = ExtResource("1_hdxfb")

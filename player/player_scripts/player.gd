@@ -9,7 +9,7 @@ var max_health : int = 3
 
 @onready var animation_player : AnimationPlayer = $AnimationPlayer
 @onready var sprite : Sprite2D = $Sprite2D
-@onready var state_machine : PlayerStateMachine = $StateMachine
+@onready var state_machine: PlayerStateMachine = $StateMachine
 
 
 
@@ -19,7 +19,6 @@ func _ready():
 	pass
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
 	
 	direction = Vector2(
@@ -46,9 +45,15 @@ func SetDirection() -> bool:
 	return true
 
 
-func UpdateAnimation( state : String ) -> void:
-	animation_player.play(state + "_" + AnimDirection())
+func UpdateAnimation(state : String) -> void:
+	animation_player.play( state + "_" + AnimDirection() )
+	pass
 
+func UpdateTacoAnimation(state : String) -> void:
+	animation_player.play( state + "_taco")
+	if cardinal_direction == Vector2.LEFT:
+		sprite.flip_h
+	
 
 func AnimDirection() -> String:
 	if cardinal_direction == Vector2.DOWN:
